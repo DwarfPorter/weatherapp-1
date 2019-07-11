@@ -16,10 +16,17 @@
 
             <TextView
                 android:id="@+id/cityName"
-                android:layout_width="215dp"
-                android:layout_height="49dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="London"
                 android:textSize="36sp" />
+
+            <Button
+                android:layout_width="52dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:onClick="onPlaceSelect"
+                android:text="..." />
         </TableRow>
 
         <TableRow
