@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="title_activity_location_selection">LocationSelection</string>
+    <string-array name="locations">
+        <item>Moscow</item>
+        <item>Saint Petersburg</item>
+        <item>Novosibirsk</item>
+        <item>Yekaterinburg</item>
+        <item>Nizhny Novgorod</item>
+        <item>Kazan</item>
+        <item>Chelyabinsk</item>
+        <item>Omsk</item>
+        <item>Samara</item>
+        <item>Rostov-na-donu</item>
+        <item>Ufa</item>
+        <item>Perm</item>
+        <item>Voronezh</item>
+        <item>Volgograd</item>
+        <item>Saratov</item>
+    </string-array>
 </resources>
