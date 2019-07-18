@@ -33,7 +33,7 @@
                 android:layout_width="52dp"
                 android:layout_height="wrap_content"
                 android:onClick="onWikiQuery"
-                android:text="?" />
+                android:text="About" />
         </TableRow>
 
         <TableRow

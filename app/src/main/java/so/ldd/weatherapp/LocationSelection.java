@@ -23,25 +23,22 @@ public class LocationSelection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_selection);
 
-        try {
-            WeatherDataListViewAdapter adapter = null;
-            adapter = new WeatherDataListViewAdapter(this, Singleton.getInstance(WeatherData.class).get_arrayOfWD());
-            ListView v = (ListView) findViewById(R.id.lv);
-            v.setAdapter(adapter);
+        Intent intent = getIntent();
+        WeatherData weatherData = (WeatherData) intent.getSerializableExtra("WEATHERCITY");
 
-            v.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Intent data = new Intent();
-                    data.putExtra("location", i);
-                    setResult(RESULT_OK, data);
-                    finish();
-                }
-            });
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
+        WeatherDataListViewAdapter adapter = null;
+        adapter = new WeatherDataListViewAdapter(this, weatherData.get_arrayOfWD());
+        ListView v = (ListView) findViewById(R.id.lv);
+        v.setAdapter(adapter);
+
+        v.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent data = new Intent();
+                data.putExtra("location", i);
+                setResult(RESULT_OK, data);
+                finish();
+            }
+        });
     }
 }

@@ -1,12 +1,13 @@
 package so.ldd.weatherapp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by k on 15.07.19.
  */
 
-public class WeatherData {
+public class WeatherData implements Serializable {
 
     private int m_currentCity = 0;
     private ArrayList<WeatherDataListViewItem> m_arrayOfWD;
@@ -39,6 +40,14 @@ public class WeatherData {
 
     public ArrayList<WeatherDataListViewItem> get_arrayOfWD() {
         return m_arrayOfWD;
+    }
+
+    public WeatherDataListViewItem getCurrent(){
+        return m_arrayOfWD.get(m_currentCity);
+    }
+
+    public void setCurrent(int city) {
+        m_currentCity = city;
     }
 
     public String toString() {

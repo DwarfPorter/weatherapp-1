@@ -16,6 +16,8 @@ public class Main extends AppCompatActivity {
 
     private final String tag = "so.ldd.weatherapp";
 
+    private SingletonMain mainPresenter;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -80,65 +82,48 @@ public class Main extends AppCompatActivity {
         Log.d(tag, "stage onSaveInstanceState");
     }
 
-    private void updateView() throws InstantiationException, IllegalAccessException {
+    private void updateView() {
         TextView tv = (TextView) findViewById(R.id.celcia);
-        String tx = Singleton.getInstance(WeatherData.class).toString() + "c";
-        if (tv != null)
-            tv.setText(tx);
+        tv.setText(((Integer)mainPresenter.getWeatherData().getCurrent().getTemperature()).toString());
 
         TextView cn = (TextView) findViewById(R.id.cityName);
-        cn.setText(Singleton.getInstance(WeatherData.class).getCurrentCityName());
+        cn.setText(mainPresenter.getWeatherData().getCurrent().getCurrentCityName());
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        try {
-            setContentView(R.layout.activity_main);
-
-            updateView();
-
-            Toast.makeText(getApplicationContext(), "stage onCreate", Toast.LENGTH_SHORT).show();
-            Log.d(tag, "stage onCreate");
-
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
+        mainPresenter = SingletonMain.getInstance();
+        mainPresenter.setWeatherData(new WeatherData());
+        updateView();
     }
 
     public void onPlaceSelect(View view) {
         Intent intent = new Intent(this, LocationSelection.class);
+        intent.putExtra("WEATHERCITY", mainPresenter.getWeatherData());
         startActivityForResult(intent, 0);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        try {
+        if (requestCode != 0) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+
+        if (resultCode == RESULT_OK) {
             int city = data.getExtras().getInt("location");
-            Singleton.getInstance(WeatherData.class).setCurrentCity(city);
-
+            mainPresenter.getWeatherData().setCurrent(city);
             updateView();
-
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
         }
     }
 
     public void onWikiQuery(View view) {
-        try {
-            Uri uri = Uri.parse(Singleton.getInstance(WeatherData.class).getCurrentWikiURI());
-            Intent openWikiIntent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(openWikiIntent);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
+
+        Uri uri = Uri.parse(mainPresenter.getWeatherData().getCurrent().getUri());
+        Intent openWikiIntent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(openWikiIntent);
     }
 }
