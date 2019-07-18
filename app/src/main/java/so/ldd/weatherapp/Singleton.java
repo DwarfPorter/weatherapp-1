@@ -10,7 +10,7 @@ import java.util.Map;
 public class Singleton {
     private static final Singleton instance = new Singleton();
     private static final Object syncObject = new Object();
-    private static final Map<Class, Object> objectStorage = new HashMap<Class, Object>();
+    private Map<Class, Object> objectStorage = new HashMap<Class, Object>();
 
     private Singleton() {}
 

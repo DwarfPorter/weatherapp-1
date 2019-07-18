@@ -16,7 +16,7 @@
 
             <TextView
                 android:id="@+id/cityName"
-                android:layout_width="match_parent"
+                android:layout_width="230dp"
                 android:layout_height="match_parent"
                 android:text="London"
                 android:textSize="36sp" />
@@ -27,6 +27,13 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onPlaceSelect"
                 android:text="..." />
+
+            <Button
+                android:id="@+id/btnAbout"
+                android:layout_width="52dp"
+                android:layout_height="wrap_content"
+                android:onClick="onWikiQuery"
+                android:text="?" />
         </TableRow>
 
         <TableRow
@@ -35,10 +42,10 @@
 
             <TextView
                 android:id="@+id/celcia"
-                android:layout_width="wrap_content"
+                android:layout_width="255dp"
                 android:layout_height="wrap_content"
                 android:text="14c"
-                android:textSize="164sp" />
+                android:textSize="150sp" />
         </TableRow>
 
         <TableRow

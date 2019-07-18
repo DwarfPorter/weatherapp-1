@@ -1,6 +1,7 @@
 package so.ldd.weatherapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.security.Signature;
 
 public class Main extends AppCompatActivity {
 
@@ -84,7 +87,7 @@ public class Main extends AppCompatActivity {
             tv.setText(tx);
 
         TextView cn = (TextView) findViewById(R.id.cityName);
-        cn.setText(getResources().getStringArray(R.array.locations)[Singleton.getInstance(WeatherData.class).getCurrentCity()]);
+        cn.setText(Singleton.getInstance(WeatherData.class).getCurrentCityName());
     }
 
     @Override
@@ -120,6 +123,18 @@ public class Main extends AppCompatActivity {
 
             updateView();
 
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onWikiQuery(View view) {
+        try {
+            Uri uri = Uri.parse(Singleton.getInstance(WeatherData.class).getCurrentWikiURI());
+            Intent openWikiIntent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(openWikiIntent);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
