@@ -77,6 +77,16 @@ public class Main extends AppCompatActivity {
         Log.d(tag, "stage onSaveInstanceState");
     }
 
+    private void updateView() throws InstantiationException, IllegalAccessException {
+        TextView tv = (TextView) findViewById(R.id.celcia);
+        String tx = Singleton.getInstance(WeatherData.class).toString() + "c";
+        if (tv != null)
+            tv.setText(tx);
+
+        TextView cn = (TextView) findViewById(R.id.cityName);
+        cn.setText(getResources().getStringArray(R.array.locations)[Singleton.getInstance(WeatherData.class).getCurrentCity()]);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,10 +94,7 @@ public class Main extends AppCompatActivity {
         try {
             setContentView(R.layout.activity_main);
 
-            TextView tv = (TextView) findViewById(R.id.celcia);
-            String tx = Singleton.getInstance(WeatherData.class).toString() + "c";
-            if (tv != null)
-                tv.setText(tx);
+            updateView();
 
             Toast.makeText(getApplicationContext(), "stage onCreate", Toast.LENGTH_SHORT).show();
             Log.d(tag, "stage onCreate");
@@ -107,9 +114,16 @@ public class Main extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        String city = getResources().getStringArray(R.array.locations)[data.getExtras().getInt("location")];
+        try {
+            int city = data.getExtras().getInt("location");
+            Singleton.getInstance(WeatherData.class).setCurrentCity(city);
 
-        TextView cn = (TextView) findViewById(R.id.cityName);
-        cn.setText(city);
+            updateView();
+
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 }
